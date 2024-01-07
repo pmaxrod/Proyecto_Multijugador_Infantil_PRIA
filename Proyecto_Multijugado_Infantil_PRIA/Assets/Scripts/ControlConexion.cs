@@ -15,27 +15,42 @@ public class ControlConexion : MonoBehaviourPunCallbacks
 {
     #region Variables privadas
     [Header("Paneles")]
+
     [SerializeField] private GameObject panelRegistro;
     [SerializeField] private GameObject panelBienvenida;
+    [SerializeField] private GameObject panelCrearSala;
+    [SerializeField] private GameObject panelConectarSala;
+    [SerializeField] private GameObject panelSeleccionAvatar;
 
-    [Header("Botones")]
+    [Header("Registro de usuario")]
+    [SerializeField] private TMP_InputField textoNombreUsuarioRegistrar;
+
+    [Header("Crear Sala")]
+    [SerializeField] private TMP_InputField textoCapacidadMinima;
+    [SerializeField] private TMP_InputField textoCapacidadMaxima;
+    [SerializeField] private Toggle toggleSalaPrivada;
     [SerializeField] private Button botonCrearSala;
+
+    [Header("Conectar a Sala")]
+    [SerializeField] private TMP_InputField textoNombreSalaPrivada;
     [SerializeField] private Button botonConectarSala;
+
+    [Header("Seleccionar Avatar")]
+    [SerializeField] private Button botonSeleccionarAvatar;
 
     [Header("Texto Paneles Superior e Inferior")]
     [SerializeField] private TMP_Text textoPanelSuperior;
     [SerializeField] private TMP_Text textoPanelInferior;
 
-    [Header("Cajas de texto")]
-    [SerializeField] private TMP_InputField textoNombreUsuarioRegistrar;
-
     ExitGames.Client.Photon.Hashtable propiedadesJugador;
+    private GameObject[] paneles;
     #endregion
 
     #region StartUpdate
     // Start is called before the first frame update
     void Start()
     {
+        paneles = new GameObject[] { panelRegistro, panelBienvenida, panelCrearSala, panelConectarSala, panelSeleccionAvatar };
         EstadoInicialPaneles();
     }
 
@@ -73,8 +88,12 @@ public class ControlConexion : MonoBehaviourPunCallbacks
     */
     private void ActivarPanel(GameObject _panel)
     {
-        panelRegistro.SetActive(false);
-        panelBienvenida.SetActive(false);
+        //        panelRegistro.SetActive(false);
+        //        panelBienvenida.SetActive(false);
+        foreach (GameObject panel in paneles)
+        {
+            panel.SetActive(false);
+        }
 
         _panel.SetActive(true);
         TextoPanelSuperior(_panel);
@@ -82,7 +101,7 @@ public class ControlConexion : MonoBehaviourPunCallbacks
     }
 
     /// <summary>
-    /// Estado inicial del menú
+    /// Estado inicial del menï¿½
     /// </summary>
     private void EstadoInicialPaneles()
     {
@@ -92,7 +111,7 @@ public class ControlConexion : MonoBehaviourPunCallbacks
     }
 
     /// <summary>
-    /// Determina el texto del panel superior según el panel activo
+    /// Determina el texto del panel superior segï¿½n el panel activo
     /// </summary>
     private void TextoPanelSuperior(GameObject _panel)
     {
@@ -105,6 +124,18 @@ public class ControlConexion : MonoBehaviourPunCallbacks
         else if (_panel == panelBienvenida)
         {
             texto = "Bienvenido al juego: " + PhotonNetwork.NickName;
+        }
+        else if (_panel == panelCrearSala)
+        {
+            texto = "Crear sala";
+        }
+        else if (_panel == panelConectarSala)
+        {
+            texto = "Conectar a sala";
+        }
+        else if (_panel == panelSeleccionAvatar)
+        {
+            texto = "Seleccionar avatar";
         }
 
         textoPanelSuperior.text = texto;
@@ -133,7 +164,7 @@ public class ControlConexion : MonoBehaviourPunCallbacks
         }
         else
         {
-            Estado("Introduzca un nombre de jugador válido");
+            Estado("Introduzca un nombre de jugador vï¿½lido");
         }
 
     }
@@ -141,12 +172,46 @@ public class ControlConexion : MonoBehaviourPunCallbacks
     public void CrearSala()
     {
         Estado("Pantalla de crear sala");
+        ActivarPanel(panelCrearSala);
     }
 
     public void ConectarSala()
     {
         Estado("Pantalla de conectarse a una sala");
+        ActivarPanel(panelConectarSala);
+    }
 
+    public void SeleccionarAvatar()
+    {
+        Estado("Pantalla de selecciÃ³n de avatar");
+        ActivarPanel(panelSeleccionAvatar);
+    }
+    public void ConfirmarCrearSala()
+    {
+    }
+
+    public void ConfirmarConectarSala()
+    {
+    }
+
+    public void ConfirmarSeleccionarAvatar()
+    {
+        Estado("Pantalla de selecciÃ³n de avatar");
+        ActivarPanel(panelSeleccionAvatar);
+    }
+    public void SalirJuego()
+    {
+        Application.Quit();
+    }
+    public void AtrasRegistro()
+    {
+        ActivarPanel(panelRegistro);
+        PhotonNetwork.Disconnect();
+    }
+    public void AtrasBienvenida()
+    {
+        ActivarPanel(panelBienvenida);
+        Estado("");
     }
     #endregion
 
