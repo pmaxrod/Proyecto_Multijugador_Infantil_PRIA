@@ -22,36 +22,63 @@ public class ControlConexion : MonoBehaviourPunCallbacks
     [SerializeField] private GameObject panelConectarSala;
     [SerializeField] private GameObject panelSeleccionAvatar;
     [SerializeField] private GameObject panelSala;
+    private GameObject[] paneles;
 
     [Header("Registro de usuario")]
     [SerializeField] private TMP_InputField textoNombreUsuarioRegistrar;
+    [SerializeField] private Button botonPanelCrearSala;
+    [SerializeField] private Button botonPanelConectarSala;
+
+    [Header("Bienvenida")]
 
     [Header("Crear Sala")]
+    [SerializeField] private TMP_InputField textoNombreSala;
     [SerializeField] private TMP_InputField textoCapacidadMinima;
     [SerializeField] private TMP_InputField textoCapacidadMaxima;
     [SerializeField] private Toggle toggleSalaPrivada;
-    [SerializeField] private Button botonCrearSala;
 
     [Header("Conectar a Sala")]
     [SerializeField] private TMP_InputField textoNombreSalaPrivada;
-    [SerializeField] private Button botonConectarSala;
+    [SerializeField] private GameObject elemSala;
+    [SerializeField] private GameObject contenedorSala;
+
+    Dictionary<string, RoomInfo> listaSalas;
 
     [Header("Seleccionar Avatar")]
-    [SerializeField] private Button botonSeleccionarAvatar;
+    static public ControlConexion conex;
+    public int avatarSeleccionado;
 
     [Header("Texto Paneles Superior e Inferior")]
     [SerializeField] private TMP_Text textoPanelSuperior;
     [SerializeField] private TMP_Text textoPanelInferior;
 
+
+    [Header("Sala con Jugadores")]
+    [SerializeField] private TMP_InputField textoNombreSalaPanelSala;
+    [SerializeField] private TMP_InputField textoCapacidadPanelSala;
+    [SerializeField] private TMP_InputField textoListadoJugadores;
+
+    [SerializeField] private GameObject elemJugador;
+    [SerializeField] private GameObject contenedorJugador;
+
     ExitGames.Client.Photon.Hashtable propiedadesJugador;
-    private GameObject[] paneles;
+
     #endregion
 
     #region StartUpdate
     // Start is called before the first frame update
     void Start()
     {
+        conex = this;
+
+        avatarSeleccionado = -1;
+
+        listaSalas = new Dictionary<string, RoomInfo>();
+
+        propiedadesJugador = new ExitGames.Client.Photon.Hashtable();
+
         paneles = new GameObject[] { panelRegistro, panelBienvenida, panelCrearSala, panelConectarSala, panelSeleccionAvatar, panelSala };
+
         EstadoInicialPaneles();
     }
 
@@ -116,7 +143,7 @@ public class ControlConexion : MonoBehaviourPunCallbacks
         }
         else if (_panel == panelSala)
         {
-            texto = "Sala: ";
+            texto = "Sala: " + PhotonNetwork.CurrentRoom.Name;
         }
 
         textoPanelSuperior.text = texto;
@@ -142,7 +169,7 @@ public class ControlConexion : MonoBehaviourPunCallbacks
         }
         else
         {
-            Estado("Introduzca un nombre de jugador vúlido");
+            Estado("Introduzca un nombre de jugador válido");
         }
 
     }
@@ -176,6 +203,40 @@ public class ControlConexion : MonoBehaviourPunCallbacks
     /// </summary>
     public void ConfirmarCrearSala()
     {
+        byte minJugadores;
+        byte maxJugadores;
+
+
+        minJugadores = byte.Parse(textoCapacidadMinima.text);
+        maxJugadores = byte.Parse(textoCapacidadMaxima.text);
+
+        if (!string.IsNullOrEmpty(textoNombreSala.text))
+        {
+            if (!(minJugadores > maxJugadores || maxJugadores > 20)
+                || minJugadores > 20 || maxJugadores < 2
+                || minJugadores < 2)
+            {
+                RoomOptions opcionesSala = new RoomOptions();
+
+                opcionesSala.MaxPlayers = maxJugadores;
+                opcionesSala.IsVisible = !toggleSalaPrivada.isOn;
+
+                Estado("Creando la nueva sala: " + textoNombreSala.text);
+
+                PhotonNetwork.CreateRoom(textoNombreSala.text,
+                    opcionesSala, TypedLobby.Default);
+
+                Estado("Creando la nueva sala: " + textoNombreSala.text);
+            }
+            else
+            {
+                Estado("Valores de capacidad de sala incorrectos");
+            }
+        }
+        else
+        {
+            Estado("Introduzca un nombre de sala correcto.");
+        }
     }
 
     /// <summary>
@@ -183,7 +244,14 @@ public class ControlConexion : MonoBehaviourPunCallbacks
     /// </summary>
     public void ConfirmarConectarSala()
     {
-        ActivarPanel(panelSala);
+/*        if (!string.IsNullOrEmpty(txtNombreSalaAUnirse.text))
+        {
+            PhotonNetwork.JoinRoom(txtNombreSalaAUnirse.text);
+        }
+
+        else
+            Estado("Introduzca un nombre correcto para la sala");
+*/
     }
 
     /// <summary>
@@ -214,22 +282,47 @@ public class ControlConexion : MonoBehaviourPunCallbacks
         ActivarPanel(panelRegistro);
         PhotonNetwork.Disconnect();
     }
+    
     /// <summary>
     /// Vuelve a la pantalla de bienvenida
     /// </summary>
     public void AtrasBienvenida()
     {
         ActivarPanel(panelBienvenida);
-        Estado("");
     }
+
+    /// <summary>
+    /// Vuelve a la pantalla de bienvenida
+    /// </summary>
+    public void AtrasBienvenidaAvatar()
+    {
+        ActivarPanel(panelBienvenida);
+        if (avatarSeleccionado >= 0)
+        {
+            Estado("Seleccionado avatar " + avatarSeleccionado);
+
+            //Activamos los botones si tenemos un avatar seleccionado
+            botonPanelCrearSala.interactable = true;
+            botonPanelConectarSala.interactable = true;
+
+
+            propiedadesJugador["avatar"] = avatarSeleccionado;
+
+            PhotonNetwork.LocalPlayer.SetCustomProperties(propiedadesJugador);
+        }
+        else
+        {
+            Estado("No hay avatar seleccionado");
+        }
+    }
+
     /// <summary>
     /// Abandona la sala
     /// </summary>
     public void AbandonarSala()
     {
-        ActivarPanel(panelConectarSala);
+        ActivarPanel(panelBienvenida);
         PhotonNetwork.LeaveRoom();
-        Estado("");
     }
     #endregion
 
@@ -246,34 +339,52 @@ public class ControlConexion : MonoBehaviourPunCallbacks
 
     public override void OnDisconnected(DisconnectCause cause)
     {
-        //base.OnDisconnected(cause);
-
         Estado("Desconectado de Photon: " + cause);
+    }
+
+    public override void OnCreateRoomFailed(short returnCode, string message)
+    {
+        Estado("No ha sido posible crear la sala: " + message);
+    }
+
+    public override void OnCreatedRoom()
+    {
+        string mensaje = PhotonNetwork.NickName + " se ha conectado a "
+            + PhotonNetwork.CurrentRoom.Name;
+
+        Estado(mensaje);
+
+        ActivarPanel(panelSala);
     }
 
     public override void OnJoinedRoom()
     {
+        string mensaje = PhotonNetwork.NickName + " se ha unido a "
+            + PhotonNetwork.CurrentRoom.Name;
 
+        Estado(mensaje);
+
+        ActivarPanel(panelSala);
     }
 
     public override void OnJoinRoomFailed(short returnCode, string message)
     {
-
+        Estado("No ha sido posible unirse a la sala: " + message);
     }
 
     public override void OnPlayerEnteredRoom(Player newPlayer)
     {
-
+        base.OnPlayerEnteredRoom(newPlayer);
     }
 
     public override void OnLeftRoom()
     {
-
+        base.OnLeftRoom();
     }
 
     public override void OnPlayerLeftRoom(Player otherPlayer)
     {
-
+        base.OnPlayerLeftRoom(otherPlayer);
     }
     #endregion
 
