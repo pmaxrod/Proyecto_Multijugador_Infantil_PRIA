@@ -3208,7 +3208,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &959282532
 RectTransform:
   m_ObjectHideFlags: 0
@@ -4713,7 +4713,7 @@ MonoBehaviour:
   textoCapacidadMaxima: {fileID: 520902766}
   toggleSalaPrivada: {fileID: 1870313495}
   textoNombreSalaPrivada: {fileID: 1254295971}
-  elemSala: {fileID: 0}
+  elemSala: {fileID: 1061657030392327901, guid: 4dd6eb9ce6e9b374e909242d198a4843, type: 3}
   contenedorSala: {fileID: 1418902436}
   avatarSeleccionado: 0
   avatarJugador: {fileID: 1581934513}
@@ -4722,7 +4722,7 @@ MonoBehaviour:
   textoNombreSalaPanelSala: {fileID: 0}
   textoCapacidadPanelSala: {fileID: 0}
   textoListadoJugadores: {fileID: 0}
-  elemJugador: {fileID: 0}
+  elemJugador: {fileID: 1061657030392327901, guid: 0f89cf1d0f7f39444b0268c171d52b0c, type: 3}
   contenedorJugador: {fileID: 1211100750}
 --- !u!4 &1395728359
 Transform:
@@ -5527,7 +5527,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1617386273
 RectTransform:
   m_ObjectHideFlags: 0
@@ -6234,7 +6234,7 @@ MonoBehaviour:
   onValueChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_IsOn: 1
+  m_IsOn: 0
 --- !u!1 &1876837318
 GameObject:
   m_ObjectHideFlags: 0
