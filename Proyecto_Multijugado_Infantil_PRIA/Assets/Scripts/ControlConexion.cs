@@ -20,7 +20,7 @@ public class ControlConexion : MonoBehaviourPunCallbacks
     [SerializeField] private GameObject panelBienvenida;
     [SerializeField] private GameObject panelCrearSala;
     [SerializeField] private GameObject panelConectarSala;
-    [SerializeField] private GameObject panelSeleccionAvatar;
+    // private GameObject panelSeleccionAvatar;
     [SerializeField] private GameObject panelSala;
     private GameObject[] paneles;
 
@@ -77,7 +77,8 @@ public class ControlConexion : MonoBehaviourPunCallbacks
 
         propiedadesJugador = new ExitGames.Client.Photon.Hashtable();
 
-        paneles = new GameObject[] { panelRegistro, panelBienvenida, panelCrearSala, panelConectarSala, panelSeleccionAvatar, panelSala };
+//        paneles = new GameObject[] { panelRegistro, panelBienvenida, panelCrearSala, panelConectarSala, panelSeleccionAvatar, panelSala };
+        paneles = new GameObject[] { panelRegistro, panelBienvenida, panelCrearSala, panelConectarSala, panelSala };
 
         EstadoInicialPaneles();
     }
