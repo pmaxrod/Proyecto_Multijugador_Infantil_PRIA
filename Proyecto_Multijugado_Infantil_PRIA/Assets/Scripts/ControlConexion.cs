@@ -29,6 +29,10 @@ public class ControlConexion : MonoBehaviourPunCallbacks
     [SerializeField] private Button botonPanelCrearSala;
     [SerializeField] private Button botonPanelConectarSala;
 
+    [Header("Seleccionar Avatar")]
+    static public ControlConexion conex;
+    public int avatarSeleccionado;
+
     [Header("Crear Sala")]
     [SerializeField] private TMP_InputField textoNombreSala;
     [SerializeField] private TMP_InputField textoCapacidadMinima;
@@ -42,14 +46,11 @@ public class ControlConexion : MonoBehaviourPunCallbacks
 
     Dictionary<string, RoomInfo> listaSalas;
 
-    [Header("Seleccionar Avatar")]
-    static public ControlConexion conex;
-    public int avatarSeleccionado;
-    public Image avatarJugador;
-
-    [Header("Texto Paneles Superior e Inferior")]
+    [Header("Paneles Superior e Inferior")]
     [SerializeField] private TMP_Text textoPanelSuperior;
     [SerializeField] private TMP_Text textoPanelInferior;
+    public Image avatarJugador;
+    [SerializeField] private TMP_Text textoNombreJugadorPanelSuperior;
 
 
     [Header("Sala con Jugadores")]
@@ -136,10 +137,12 @@ public class ControlConexion : MonoBehaviourPunCallbacks
         {
             texto = "Conectar a sala";
         }
-        else if (_panel == panelSeleccionAvatar)
-        {
-            texto = "Seleccionar avatar";
-        }
+        /*
+                else if (_panel == panelSeleccionAvatar)
+                {
+                    texto = "Seleccionar avatar";
+                }
+        */
         else if (_panel == panelSala)
         {
             texto = "Sala: " + PhotonNetwork.CurrentRoom.Name;
@@ -163,6 +166,9 @@ public class ControlConexion : MonoBehaviourPunCallbacks
             PhotonNetwork.AutomaticallySyncScene = true;
 
             PhotonNetwork.NickName = textoNombreUsuarioRegistrar.text;
+            textoNombreJugadorPanelSuperior.text = PhotonNetwork.NickName;
+
+            AsignarAvatar();
 
             Estado("Conectando a Photon");
         }
@@ -192,10 +198,12 @@ public class ControlConexion : MonoBehaviourPunCallbacks
     /// <summary>
     /// Va a la pantalla de seleccionar un avatar
     /// </summary>
+/*
     public void SeleccionarAvatar()
     {
         ActivarPanel(panelSeleccionAvatar);
     }
+*/
 
     /// <summary>
     /// Crea una sala
@@ -284,32 +292,6 @@ public class ControlConexion : MonoBehaviourPunCallbacks
     }
 
     /// <summary>
-    /// Vuelve a la pantalla de bienvenida
-    /// </summary>
-    public void AtrasBienvenidaAvatar()
-    {
-        ActivarPanel(panelBienvenida);
-        if (avatarSeleccionado >= 0)
-        {
-            Estado("Seleccionado avatar " + avatarSeleccionado);
-
-            //Activamos los botones si tenemos un avatar seleccionado
-            botonPanelCrearSala.interactable = true;
-            botonPanelConectarSala.interactable = true;
-
-            propiedadesJugador["avatar"] = avatarSeleccionado;
-
-            PhotonNetwork.LocalPlayer.SetCustomProperties(propiedadesJugador);
-
-            Debug.Log(propiedadesJugador["avatar"]);
-        }
-        else
-        {
-            Estado("No hay avatar seleccionado");
-        }
-    }
-
-    /// <summary>
     /// Abandona la sala
     /// </summary>
     public void AbandonarSala()
@@ -390,6 +372,32 @@ public class ControlConexion : MonoBehaviourPunCallbacks
     {
         textoPanelInferior.text = _msg;
         Debug.Log(_msg);
+    }
+
+    /// <summary>
+    /// Asigna el avatar
+    /// </summary>
+    public void AsignarAvatar()
+    {
+        //ActivarPanel(panelBienvenida);
+        if (avatarSeleccionado >= 0)
+        {
+            Estado("Seleccionado avatar " + avatarSeleccionado);
+
+            //Activamos los botones si tenemos un avatar seleccionado
+            //            botonPanelCrearSala.interactable = true;
+            //            botonPanelConectarSala.interactable = true;
+
+            propiedadesJugador["avatar"] = avatarSeleccionado;
+
+            PhotonNetwork.LocalPlayer.SetCustomProperties(propiedadesJugador);
+
+            Debug.Log(propiedadesJugador["avatar"]);
+        }
+        else
+        {
+            Estado("No hay avatar seleccionado");
+        }
     }
     #endregion
 
