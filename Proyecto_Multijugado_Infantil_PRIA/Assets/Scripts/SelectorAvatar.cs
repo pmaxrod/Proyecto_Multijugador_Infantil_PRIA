@@ -5,27 +5,29 @@ using UnityEngine.UI;
 
 public class SelectorAvatar : MonoBehaviour
 {
-    [SerializeField] private GameObject listaAvatares;
+    //    [SerializeField] private GameObject listaAvatares;
+    [SerializeField] public Sprite[] listaAvatares;
     [SerializeField] private GameObject image;
 
     private int nHijos;
     private int indiceAvatares;
-    private GameObject[] avatares;
+
+    //private GameObject[] avatares;
 
     // Start is called before the first frame update
     void Start()
     {
         indiceAvatares = 0;
-        nHijos = listaAvatares.transform.childCount;
-        avatares = new GameObject[nHijos];
+        nHijos = listaAvatares.Length;
+//        avatares = new GameObject[nHijos];
 
-        for (int i = 0; i < nHijos; i++)
+/*        for (int i = 0; i < nHijos; i++)
         {
             avatares[i] = listaAvatares.transform.GetChild(i).gameObject;
         }
+*/
         // cargar en el componente Image el avatar con indice indiceAvatares
-        image.GetComponent<Image>().sprite =
-            avatares[indiceAvatares].gameObject.GetComponent<SpriteRenderer>().sprite;
+        image.GetComponent<Image>().sprite = listaAvatares[indiceAvatares];
     }
 
     // Update is called once per frame
@@ -34,7 +36,7 @@ public class SelectorAvatar : MonoBehaviour
 
     }
 
-    public void Pulsar_BtnDerecho()
+    public void BotonDerecho()
     {
         indiceAvatares++;
 
@@ -43,11 +45,11 @@ public class SelectorAvatar : MonoBehaviour
             indiceAvatares = 0;
         }
 
-        image.GetComponent<Image>().sprite =
-           avatares[indiceAvatares].gameObject.GetComponent<SpriteRenderer>().sprite;
+        image.GetComponent<Image>().sprite = listaAvatares[indiceAvatares];
+        ControlConexion.conex.Estado("");
     }
 
-    public void Pulsar_BtnIzquierdo()
+    public void BotonIzquierdo()
     {
         indiceAvatares--;
 
@@ -56,15 +58,18 @@ public class SelectorAvatar : MonoBehaviour
             indiceAvatares = nHijos - 1;
         }
 
-        image.GetComponent<Image>().sprite =
-           avatares[indiceAvatares].gameObject.GetComponent<SpriteRenderer>().sprite;
+        image.GetComponent<Image>().sprite = listaAvatares[indiceAvatares];
+        ControlConexion.conex.Estado("");
     }
 
     /// <summary>
-    /// Guardar el número del avatar seleccionado en el atributo de la clase CtrlConexion
+    /// Guarda el número del avatar seleccionado en el atributo de la clase ControlConexion
     /// </summary>
-    public void Pulsar_BtnSeleccionarAvatar()
+    public void SeleccionarAvatar()
     {
         ControlConexion.conex.avatarSeleccionado = indiceAvatares;
+        ControlConexion.conex.avatarJugador.GetComponent<Image>().sprite = listaAvatares[indiceAvatares];
+
+        ControlConexion.conex.Estado("El avatar seleccionado es el: " + indiceAvatares);
     }
 }

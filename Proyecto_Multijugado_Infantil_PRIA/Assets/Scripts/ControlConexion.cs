@@ -29,8 +29,6 @@ public class ControlConexion : MonoBehaviourPunCallbacks
     [SerializeField] private Button botonPanelCrearSala;
     [SerializeField] private Button botonPanelConectarSala;
 
-    [Header("Bienvenida")]
-
     [Header("Crear Sala")]
     [SerializeField] private TMP_InputField textoNombreSala;
     [SerializeField] private TMP_InputField textoCapacidadMinima;
@@ -47,6 +45,7 @@ public class ControlConexion : MonoBehaviourPunCallbacks
     [Header("Seleccionar Avatar")]
     static public ControlConexion conex;
     public int avatarSeleccionado;
+    public Image avatarJugador;
 
     [Header("Texto Paneles Superior e Inferior")]
     [SerializeField] private TMP_Text textoPanelSuperior;
@@ -244,21 +243,14 @@ public class ControlConexion : MonoBehaviourPunCallbacks
     /// </summary>
     public void ConfirmarConectarSala()
     {
-/*        if (!string.IsNullOrEmpty(txtNombreSalaAUnirse.text))
-        {
-            PhotonNetwork.JoinRoom(txtNombreSalaAUnirse.text);
-        }
+        /*        if (!string.IsNullOrEmpty(txtNombreSalaAUnirse.text))
+                {
+                    PhotonNetwork.JoinRoom(txtNombreSalaAUnirse.text);
+                }
 
-        else
-            Estado("Introduzca un nombre correcto para la sala");
-*/
-    }
-
-    /// <summary>
-    /// Selecciona un avatar
-    /// </summary>
-    public void ConfirmarSeleccionarAvatar()
-    {
+                else
+                    Estado("Introduzca un nombre correcto para la sala");
+        */
     }
 
     public void IniciarPartida()
@@ -282,7 +274,7 @@ public class ControlConexion : MonoBehaviourPunCallbacks
         ActivarPanel(panelRegistro);
         PhotonNetwork.Disconnect();
     }
-    
+
     /// <summary>
     /// Vuelve a la pantalla de bienvenida
     /// </summary>
@@ -305,10 +297,11 @@ public class ControlConexion : MonoBehaviourPunCallbacks
             botonPanelCrearSala.interactable = true;
             botonPanelConectarSala.interactable = true;
 
-
             propiedadesJugador["avatar"] = avatarSeleccionado;
 
             PhotonNetwork.LocalPlayer.SetCustomProperties(propiedadesJugador);
+
+            Debug.Log(propiedadesJugador["avatar"]);
         }
         else
         {
@@ -393,7 +386,7 @@ public class ControlConexion : MonoBehaviourPunCallbacks
     /// La cadena de texto pasada por parámetro es el mensaje del panel inferior
     /// </summary>
     /// <param name="_msg"></param>
-    private void Estado(string _msg)
+    public void Estado(string _msg)
     {
         textoPanelInferior.text = _msg;
         Debug.Log(_msg);
