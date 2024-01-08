@@ -146,7 +146,7 @@ GameObject:
   - component: {fileID: 3001932125223101267}
   - component: {fileID: 7220867732561272105}
   m_Layer: 5
-  m_Name: "TextoN\xFAmeroJugadores"
+  m_Name: TextoCapacidadSala
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
