@@ -24,7 +24,7 @@ public class ControlConexion : MonoBehaviourPunCallbacks
     private GameObject[] paneles;
 
     [Header("Registro de usuario")]
-    [SerializeField] private TMP_InputField textoNombreUsuarioRegistrar;
+    [SerializeField] private TMP_InputField inputNombreUsuarioRegistrar;
     [SerializeField] private Button botonPanelCrearSala;
     [SerializeField] private Button botonPanelConectarSala;
 
@@ -33,13 +33,13 @@ public class ControlConexion : MonoBehaviourPunCallbacks
     public int avatarSeleccionado;
 
     [Header("Crear Sala")]
-    [SerializeField] private TMP_InputField textoNombreSala;
-    [SerializeField] private TMP_InputField textoCapacidadMinima;
-    [SerializeField] private TMP_InputField textoCapacidadMaxima;
+    [SerializeField] private TMP_InputField inputNombreSala;
+    [SerializeField] private TMP_InputField inputCapacidadMinima;
+    [SerializeField] private TMP_InputField inputCapacidadMaxima;
     [SerializeField] private Toggle toggleSalaPrivada;
 
     [Header("Conectar a Sala")]
-    [SerializeField] private TMP_InputField textoNombreSalaPrivada;
+    [SerializeField] private TMP_InputField inputNombreSalaPrivada;
     [SerializeField] private GameObject elemSala;
     [SerializeField] private GameObject contenedorSala;
 
@@ -53,10 +53,9 @@ public class ControlConexion : MonoBehaviourPunCallbacks
 
 
     [Header("Sala con Jugadores")]
-    [SerializeField] private TMP_InputField textoNombreSalaPanelSala;
-    [SerializeField] private TMP_InputField textoCapacidadPanelSala;
-    [SerializeField] private TMP_InputField textoListadoJugadores;
-    [SerializeField] private TMP_InputField textoMinJugadores;
+    [SerializeField] private TMP_Text textoNombreSala;
+    [SerializeField] private TMP_Text textoCapacidad;
+    [SerializeField] private TMP_Text textoListadoJugadores;
     [SerializeField] private Button botonIniciarPartida;
 
     [SerializeField] private GameObject elemJugador;
@@ -128,7 +127,7 @@ public class ControlConexion : MonoBehaviourPunCallbacks
         }
         else if (_panel == panelBienvenida)
         {
-            texto = "Bienvenido al juego: " + PhotonNetwork.NickName;
+            texto = "Bienvenido al juegos";
         }
         else if (_panel == panelCrearSala)
         {
@@ -153,14 +152,14 @@ public class ControlConexion : MonoBehaviourPunCallbacks
     /// </summary>
     public void RegistroUsuario()
     {
-        if (!string.IsNullOrEmpty(textoNombreUsuarioRegistrar.text)
-    && !string.IsNullOrWhiteSpace(textoNombreUsuarioRegistrar.text))
+        if (!string.IsNullOrEmpty(inputNombreUsuarioRegistrar.text)
+    && !string.IsNullOrWhiteSpace(inputNombreUsuarioRegistrar.text))
 
         {
             PhotonNetwork.ConnectUsingSettings();
             PhotonNetwork.AutomaticallySyncScene = true;
 
-            PhotonNetwork.NickName = textoNombreUsuarioRegistrar.text;
+            PhotonNetwork.NickName = inputNombreUsuarioRegistrar.text;
             textoNombreJugadorPanelSuperior.text = PhotonNetwork.NickName;
 
             AsignarAvatar();
@@ -199,10 +198,10 @@ public class ControlConexion : MonoBehaviourPunCallbacks
         byte maxJugadores;
 
 
-        minJugadores = byte.Parse(textoCapacidadMinima.text);
-        maxJugadores = byte.Parse(textoCapacidadMaxima.text);
+        minJugadores = byte.Parse(inputCapacidadMinima.text);
+        maxJugadores = byte.Parse(inputCapacidadMaxima.text);
 
-        if (!string.IsNullOrEmpty(textoNombreSala.text))
+        if (!string.IsNullOrEmpty(inputNombreSala.text))
         {
             if (!(minJugadores > maxJugadores || maxJugadores > 20)
                 || minJugadores > 20 || maxJugadores < 2
@@ -213,12 +212,10 @@ public class ControlConexion : MonoBehaviourPunCallbacks
                 opcionesSala.MaxPlayers = maxJugadores;
                 opcionesSala.IsVisible = !toggleSalaPrivada.isOn;
 
-                Estado("Creando la nueva sala: " + textoNombreSala.text);
-
-                PhotonNetwork.CreateRoom(textoNombreSala.text,
+                PhotonNetwork.CreateRoom(inputNombreSala.text,
                     opcionesSala, TypedLobby.Default);
 
-                Estado("Creando la nueva sala: " + textoNombreSala.text);
+                Estado("Creando la nueva sala: " + inputNombreSala.text);
             }
             else
             {
@@ -236,9 +233,9 @@ public class ControlConexion : MonoBehaviourPunCallbacks
     /// </summary>
     public void ConfirmarConectarSalaPrivada()
     {
-        if (!string.IsNullOrEmpty(textoNombreSalaPrivada.text))
+        if (!string.IsNullOrEmpty(inputNombreSalaPrivada.text))
         {
-            PhotonNetwork.JoinRoom(textoNombreSalaPrivada.text);
+            PhotonNetwork.JoinRoom(inputNombreSalaPrivada.text);
         }
 
         else
@@ -363,12 +360,12 @@ public class ControlConexion : MonoBehaviourPunCallbacks
     private void ActualizarPanelDeJugadores()
     {
         //Actualización del nombre de sala y su capacidad
-        textoNombreSalaPanelSala.text = "Sala: " + PhotonNetwork.CurrentRoom.Name;
-        textoCapacidadPanelSala.text = "Capacidad: " +
+        textoNombreSala.text = "Sala: " + PhotonNetwork.CurrentRoom.Name;
+        textoCapacidad.text = "Capacidad: " +
             PhotonNetwork.CurrentRoom.PlayerCount + "/" +
             PhotonNetwork.CurrentRoom.MaxPlayers;
 
-        textoListadoJugadores.text = "";
+        //textoListadoJugadores.text = "";
 
         while (contenedorJugador.transform.childCount > 0)
         {
@@ -378,7 +375,7 @@ public class ControlConexion : MonoBehaviourPunCallbacks
 
         foreach (Player jugador in PhotonNetwork.PlayerList)
         {
-            textoListadoJugadores.text = textoListadoJugadores.text + "\n" + jugador.NickName;
+            //textoListadoJugadores.text += jugador.NickName + "\n";
 
             GameObject nuevoElemento = Instantiate(elemJugador);
             nuevoElemento.transform.SetParent(contenedorJugador.transform);
@@ -398,11 +395,9 @@ public class ControlConexion : MonoBehaviourPunCallbacks
                 case 0:
                     avatar = "Azul";
                     break;
-
                 case 1:
                     avatar = "Verde";
                     break;
-
                 case 2:
                     avatar = "Rojo";
                     break;
@@ -416,8 +411,7 @@ public class ControlConexion : MonoBehaviourPunCallbacks
 
         //Activacion del boton Comenzar Juego si el número minimo de jugadores esta en la sala
         // y eres Master
-        bool iniciarPartida = PhotonNetwork.CurrentRoom.PlayerCount >= int.Parse(textoMinJugadores.text) &&
-        PhotonNetwork.IsMasterClient;
+        bool iniciarPartida = PhotonNetwork.CurrentRoom.PlayerCount >= int.Parse(inputCapacidadMinima.text) && PhotonNetwork.IsMasterClient;
 
         botonIniciarPartida.gameObject.SetActive(iniciarPartida);
 
