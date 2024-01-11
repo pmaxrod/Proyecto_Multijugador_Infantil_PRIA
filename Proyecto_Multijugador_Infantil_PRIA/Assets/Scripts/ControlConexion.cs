@@ -332,15 +332,22 @@ public class ControlConexion : MonoBehaviourPunCallbacks
 
         foreach (RoomInfo sala in listaSalas.Values)
         {
-            GameObject nuevoElemento = Instantiate(elemSala);
-            nuevoElemento.transform.SetParent(contenedorSala.transform, false);
+            if (sala.PlayerCount <= 0 || sala.MaxPlayers <= 0)
+            {
+                listaSalas.Remove(sala.Name);
+            }
+            else
+            {
+                GameObject nuevoElemento = Instantiate(elemSala);
+                nuevoElemento.transform.SetParent(contenedorSala.transform, false);
 
-            // localizar las etiquetas y las actualizamos
-            nuevoElemento.transform.Find("TextoNombreSala").GetComponent<TextMeshProUGUI>().text = sala.Name;
+                // localizar las etiquetas y las actualizamos
+                nuevoElemento.transform.Find("TextoNombreSala").GetComponent<TextMeshProUGUI>().text = sala.Name;
 
-            nuevoElemento.transform.Find("TextoCapacidadSala").GetComponent<TextMeshProUGUI>().text = sala.PlayerCount + "/" + sala.MaxPlayers;
+                nuevoElemento.transform.Find("TextoCapacidadSala").GetComponent<TextMeshProUGUI>().text = sala.PlayerCount + "/" + sala.MaxPlayers;
 
-            nuevoElemento.GetComponent<Button>().onClick.AddListener(() => { UnirseASalaDesdeLista(sala.Name); });
+                nuevoElemento.GetComponent<Button>().onClick.AddListener(() => { UnirseASalaDesdeLista(sala.Name); });
+            }
         }
     }
 
@@ -410,6 +417,11 @@ public class ControlConexion : MonoBehaviourPunCallbacks
 
     }
 
+    [PunRPC]
+    public void EliminarSalasViejas()
+    {
+
+    }
     #endregion
 
     #region Callbacks
@@ -479,7 +491,7 @@ public class ControlConexion : MonoBehaviourPunCallbacks
         // borrar la sala de la lista que no se encuentra o no es visible en este momento
         foreach (RoomInfo sala in roomList)
         {
-            if (sala.RemovedFromList || !sala.IsOpen || !sala.IsVisible || sala.PlayerCount <= 0)
+            if (sala.RemovedFromList || !sala.IsOpen || !sala.IsVisible)
             {
                 listaSalas.Remove(sala.Name);
             }
@@ -487,11 +499,12 @@ public class ControlConexion : MonoBehaviourPunCallbacks
             // comprobando que la sala se ha modificado
             if (listaSalas.ContainsKey(sala.Name))
             {
-                if (sala.PlayerCount > 0)
-                    listaSalas[sala.Name] = sala;
-
-                else // si se ha quedado sin jugadores, la borramos
+                // Se borran las salas sin jugadores
+                if (sala.PlayerCount <= 0 || sala.MaxPlayers <= 0)
                     listaSalas.Remove(sala.Name);
+
+                else
+                    listaSalas[sala.Name] = sala;
             }
             else // es una nueva sala
                 listaSalas.Add(sala.Name, sala);
@@ -499,7 +512,7 @@ public class ControlConexion : MonoBehaviourPunCallbacks
         }
 
         ActualizarPanelUnirseASala();
-
+        //photonView.RPC("EliminarSalasViejas", RpcTarget.All);
     }
 
 
