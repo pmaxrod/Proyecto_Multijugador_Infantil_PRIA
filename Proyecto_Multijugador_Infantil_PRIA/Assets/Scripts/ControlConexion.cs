@@ -247,7 +247,7 @@ public class ControlConexion : MonoBehaviourPunCallbacks
 
     public void IniciarPartida()
     {
-
+        SceneManager.LoadScene(1);
     }
 
     /// <summary>
@@ -438,6 +438,7 @@ public class ControlConexion : MonoBehaviourPunCallbacks
     public override void OnDisconnected(DisconnectCause cause)
     {
         Estado("Desconectado de Photon: " + cause);
+        SceneManager.LoadScene(0);
     }
 
     public override void OnCreateRoomFailed(short returnCode, string message)
