@@ -115,6 +115,14 @@ public class ControlConexion : MonoBehaviourPunCallbacks
     }
 
     /// <summary>
+    /// Volver al panel de sala para volver a hacer una partida
+    /// </summary>
+    public void PanelSalaIniciarPartida()
+    {
+        ActivarPanel(panelSala);
+    }
+
+    /// <summary>
     /// Determina el texto del panel superior según el panel activo
     /// </summary>
     private void TextoPanelSuperior(GameObject _panel)
@@ -483,6 +491,13 @@ public class ControlConexion : MonoBehaviourPunCallbacks
     {
         //        base.OnPlayerLeftRoom(otherPlayer);
         ActualizarPanelDeJugadores();
+/*        if (PhotonNetwork.IsMasterClient)
+        {
+            foreach (Player jugador in PhotonNetwork.PlayerList)
+            { 
+
+            }
+        }*/
     }
 
     public override void OnRoomListUpdate(List<RoomInfo> roomList)

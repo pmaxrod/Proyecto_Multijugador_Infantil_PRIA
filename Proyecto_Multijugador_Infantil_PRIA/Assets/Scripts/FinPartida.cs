@@ -28,5 +28,6 @@ public class FinPartida : MonoBehaviourPunCallbacks
     public void NuevaPartida()
     {
         SceneManager.LoadScene(0);
+        ControlConexion.conex.PanelSalaIniciarPartida();
     }
 }
