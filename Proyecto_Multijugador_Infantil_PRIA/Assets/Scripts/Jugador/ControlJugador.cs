@@ -28,7 +28,7 @@ public class ControlJugador : MonoBehaviourPun
     {
         if (photonView.IsMine)
         {
-            rigi.velocity = Vector2.one * Input.GetAxis("Vertical") * velocidad * Input.GetAxis("Horizontal")* Time.deltaTime;
+            rigi.AddForce(new Vector2(Input.GetAxis("Horizontal") * Time.deltaTime * speedMult, 0));
 
         }
     }
