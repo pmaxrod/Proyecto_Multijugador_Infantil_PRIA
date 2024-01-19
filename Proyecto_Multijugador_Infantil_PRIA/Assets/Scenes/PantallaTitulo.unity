@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0, g: 0, b: 0, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657868, g: 0.49641263, b: 0.57481706, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -2004,7 +2004,7 @@ PrefabInstance:
     - target: {fileID: 1679030458665426750, guid: 09f9310c1cabaef4b941bbba3b91ef6d, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 1136615156}
+      objectReference: {fileID: 1778121430}
     - target: {fileID: 1679030458665426750, guid: 09f9310c1cabaef4b941bbba3b91ef6d, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
       value: BotonDerecho
@@ -4109,59 +4109,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!1 &1136615155
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1136615157}
-  - component: {fileID: 1136615156}
-  m_Layer: 5
-  m_Name: _SelectorAvatares
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &1136615156
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1136615155}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2df19d9f3e44ecd42a32f1db1f3c7f45, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  listaAvatares:
-  - {fileID: 21300000, guid: 2552680102cabce4a8cd83bb051d0984, type: 3}
-  - {fileID: 21300000, guid: 603be8e2fc45db54997ee58d9748390a, type: 3}
-  - {fileID: 21300000, guid: bc37efb76bc405b41a55cf29872a6100, type: 3}
-  image: {fileID: 1126558288}
---- !u!224 &1136615157
-RectTransform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1136615155}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 960, y: 540}
-  m_SizeDelta: {x: 100, y: 100}
-  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1166823309
 GameObject:
   m_ObjectHideFlags: 0
@@ -6016,7 +5963,8 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "Pablo Maxi\xE1 Rodr\xEDguez\n\nBayat Games"
+  m_text: "Pablo Maxi\xE1 Rodr\xEDguez\n\nPhoton Network\n\nBayat Games - Free Platform
+    Game Assets\n\nBrackeys - 2D Mega Pack"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -6378,6 +6326,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1778121429}
+  - component: {fileID: 1778121430}
   m_Layer: 5
   m_Name: SelectorAvatar
   m_TagString: Untagged
@@ -6407,6 +6356,23 @@ RectTransform:
   m_AnchoredPosition: {x: 300, y: 20}
   m_SizeDelta: {x: 720, y: 200}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1778121430
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1778121428}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2df19d9f3e44ecd42a32f1db1f3c7f45, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  listaAvatares:
+  - {fileID: 21300000, guid: 2552680102cabce4a8cd83bb051d0984, type: 3}
+  - {fileID: 21300000, guid: 603be8e2fc45db54997ee58d9748390a, type: 3}
+  - {fileID: 21300000, guid: bc37efb76bc405b41a55cf29872a6100, type: 3}
+  image: {fileID: 1126558288}
 --- !u!1 &1790362570
 GameObject:
   m_ObjectHideFlags: 0
@@ -6745,7 +6711,7 @@ PrefabInstance:
     - target: {fileID: 1679030458665426750, guid: 09f9310c1cabaef4b941bbba3b91ef6d, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 1136615156}
+      objectReference: {fileID: 1778121430}
     - target: {fileID: 1679030458665426750, guid: 09f9310c1cabaef4b941bbba3b91ef6d, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
       value: BotonIzquierdo
@@ -7664,7 +7630,7 @@ PrefabInstance:
     - target: {fileID: 1679030458665426750, guid: 09f9310c1cabaef4b941bbba3b91ef6d, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 1136615156}
+      objectReference: {fileID: 1778121430}
     - target: {fileID: 1679030458665426750, guid: 09f9310c1cabaef4b941bbba3b91ef6d, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Target
       value: 
@@ -8008,6 +7974,5 @@ SceneRoots:
   - {fileID: 963194228}
   - {fileID: 705507995}
   - {fileID: 1395728359}
-  - {fileID: 1136615157}
   - {fileID: 541692354}
   - {fileID: 538978205}

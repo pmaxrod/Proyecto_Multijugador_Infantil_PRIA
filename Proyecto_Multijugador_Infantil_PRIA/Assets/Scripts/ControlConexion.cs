@@ -62,7 +62,7 @@ public class ControlConexion : MonoBehaviourPunCallbacks
     [SerializeField] private GameObject elemJugador;
     [SerializeField] private GameObject contenedorJugador;
 
-    ExitGames.Client.Photon.Hashtable propiedadesJugador;
+    public ExitGames.Client.Photon.Hashtable propiedadesJugador;
 
     #endregion
 
@@ -435,12 +435,6 @@ public class ControlConexion : MonoBehaviourPunCallbacks
         bool iniciarPartida = numeroJugadores >= int.Parse(capacidadMinima) && PhotonNetwork.IsMasterClient;
 
         botonIniciarPartida.gameObject.SetActive(iniciarPartida);
-
-    }
-
-    [PunRPC]
-    public void EliminarSalasViejas()
-    {
 
     }
     #endregion

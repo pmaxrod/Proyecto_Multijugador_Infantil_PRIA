@@ -4,13 +4,16 @@ using UnityEngine;
 using Photon.Pun;
 using Photon.Realtime;
 using UnityEngine.SceneManagement;
+using TMPro;
 
 public class FinPartida : MonoBehaviourPunCallbacks
 {
+    [SerializeField] private TMP_Text textoGanador;
+
     // Start is called before the first frame update
     void Start()
     {
-
+        TextoGanador();
     }
 
     // Update is called once per frame
@@ -29,5 +32,22 @@ public class FinPartida : MonoBehaviourPunCallbacks
     {
         SceneManager.LoadScene("PantallaTitulo");
         ControlConexion.conex.PanelSalaIniciarPartida();
+    }
+
+    private void TextoGanador()
+    {
+        int monedasGanador = 0;
+        foreach (Player jugador in PhotonNetwork.PlayerList)
+        {
+            int monedas = (int)jugador.CustomProperties["monedas"];
+
+            if(monedas >= monedasGanador)
+            {
+                monedasGanador = monedas;
+            }
+        }
+
+        textoGanador.text = "Ganador: " + monedasGanador;
+
     }
 }
