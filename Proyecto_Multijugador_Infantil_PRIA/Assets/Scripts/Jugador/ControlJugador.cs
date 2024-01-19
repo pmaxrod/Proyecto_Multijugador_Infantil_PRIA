@@ -28,16 +28,16 @@ public class ControlJugador : MonoBehaviourPun
     {
         if (photonView.IsMine)
         {
-            rigi.AddForce(new Vector2(Input.GetAxis("Horizontal") * Time.deltaTime * velocidad, 0));
+            rigi.AddForce(new Vector2(Input.GetAxis("Horizontal") * Time.deltaTime * velocidad, Input.GetAxis("Vertical") * Time.deltaTime * velocidad));
 
         }
     }
 
-    private void OnCollisionEnter(Collision collision)
+    private void OnTriggerEnter(Collider other)
     {
-        if (collision.gameObject.CompareTag("Moneda"))
+        if (other.gameObject.CompareTag("Moneda"))
         {
-            PhotonNetwork.Destroy(collision.gameObject);
+            PhotonNetwork.Destroy(other.gameObject);
             monedas += 1;
             ControlConexion.conex.propiedadesJugador["monedas"] = monedas;
         }

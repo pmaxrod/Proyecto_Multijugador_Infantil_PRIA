@@ -28,15 +28,14 @@ public class ControlJuego : MonoBehaviourPunCallbacks
     {
         if (cuentaAtrasActiva)
         {
-            if (cuentaAtras == 0)
+            if (cuentaAtras <= 0)
             {
+                cuentaAtrasActiva = false;
                 SceneManager.LoadScene("FinDeJuego");
             }
             else
             {
                 photonView.RPC("CuentaAtras", RpcTarget.All);
-                cuentaAtras = 0;
-                cuentaAtrasActiva = false;
             }
         }
     }
