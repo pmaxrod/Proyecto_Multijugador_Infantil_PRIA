@@ -21,13 +21,13 @@ public class FinPartida : MonoBehaviourPunCallbacks
 
     public void Salir()
     {
-        SceneManager.LoadScene(0);
+        SceneManager.LoadScene("PantallaTitulo");
         ControlConexion.conex.AbandonarSala();
     }
 
     public void NuevaPartida()
     {
-        SceneManager.LoadScene(0);
+        SceneManager.LoadScene("PantallaTitulo");
         ControlConexion.conex.PanelSalaIniciarPartida();
     }
 }

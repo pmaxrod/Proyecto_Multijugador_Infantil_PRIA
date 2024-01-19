@@ -21,6 +21,7 @@ public class ControlConexion : MonoBehaviourPunCallbacks
     [SerializeField] private GameObject panelCrearSala;
     [SerializeField] private GameObject panelConectarSala;
     [SerializeField] private GameObject panelSala;
+    [SerializeField] private GameObject panelCreditos;
     private GameObject[] paneles;
 
     [Header("Registro de usuario")]
@@ -77,7 +78,7 @@ public class ControlConexion : MonoBehaviourPunCallbacks
 
         propiedadesJugador = new ExitGames.Client.Photon.Hashtable();
 
-        paneles = new GameObject[] { panelRegistro, panelBienvenida, panelCrearSala, panelConectarSala, panelSala };
+        paneles = new GameObject[] { panelRegistro, panelBienvenida, panelCrearSala, panelConectarSala, panelSala, panelCreditos};
 
         EstadoInicialPaneles();
     }
@@ -148,6 +149,10 @@ public class ControlConexion : MonoBehaviourPunCallbacks
         else if (_panel == panelSala)
         {
             texto = "Sala: " + PhotonNetwork.CurrentRoom.Name;
+        }
+	else if (_panel == panelCreditos)
+        {
+            texto = "Créditos";
         }
 
         textoPanelSuperior.text = texto;
@@ -255,7 +260,7 @@ public class ControlConexion : MonoBehaviourPunCallbacks
 
     public void IniciarPartida()
     {
-        SceneManager.LoadScene(1);
+        SceneManager.LoadScene("Juego");
     }
 
     /// <summary>
@@ -292,6 +297,14 @@ public class ControlConexion : MonoBehaviourPunCallbacks
         PhotonNetwork.LeaveLobby();
         PhotonNetwork.JoinLobby(TypedLobby.Default); // unirse al lobby por defecto
         ActivarPanel(panelBienvenida);
+    }
+
+    /// <summary>
+    /// Va al panel de créditos
+    /// </summary>
+    public void PanelCreditos()
+    {
+        ActivarPanel(panelCreditos);
     }
     #endregion
 
