@@ -13,14 +13,18 @@ public class ControlJuego : MonoBehaviourPunCallbacks
     private bool cuentaAtrasActiva = false;
 
     [SerializeField] private TMP_Text textoCuentaAtras;
+    [SerializeField] public TMP_Text textoMonedasRecogidas;
 
-    private PhotonView photonView;
+    public static ControlJuego instance;
+    //private PhotonView photonView;
 
     // Start is called before the first frame update
     void Start()
     {
         cuentaAtrasActiva = true;
-        photonView = GetComponent<PhotonView>();
+        instance = this;
+        //photonView = GetComponent<PhotonView>();
+        //photonView = GetComponent<PhotonView>();
     }
 
     // Update is called once per frame
@@ -31,7 +35,7 @@ public class ControlJuego : MonoBehaviourPunCallbacks
             if (cuentaAtras <= 0)
             {
                 cuentaAtrasActiva = false;
-                SceneManager.LoadScene("FinDeJuego");
+                SceneManager.LoadSceneAsync("FinDeJuego");
             }
             else
             {
