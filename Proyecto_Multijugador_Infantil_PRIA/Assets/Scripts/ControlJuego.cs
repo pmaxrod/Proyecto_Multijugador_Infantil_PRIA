@@ -16,6 +16,8 @@ public class ControlJuego : MonoBehaviourPunCallbacks
     [SerializeField] public TMP_Text textoMonedasRecogidas;
 
     public static ControlJuego instance;
+    public Player[] jugadores; // porque PlayerList desaparece al cargar la escena de fin de juego.
+
     //private PhotonView photonView;
 
     // Start is called before the first frame update
@@ -23,6 +25,7 @@ public class ControlJuego : MonoBehaviourPunCallbacks
     {
         cuentaAtrasActiva = true;
         instance = this;
+        jugadores = PhotonNetwork.PlayerList;
         //photonView = GetComponent<PhotonView>();
         //photonView = GetComponent<PhotonView>();
     }

@@ -37,7 +37,7 @@ public class FinPartida : MonoBehaviourPunCallbacks
     private void TextoGanador()
     {
         int monedasGanador = 0;
-        foreach (Player jugador in PhotonNetwork.PlayerList)
+        foreach (Player jugador in ControlJuego.instance.jugadores)
         {
             int monedas = (int)jugador.CustomProperties["monedas"];
 
