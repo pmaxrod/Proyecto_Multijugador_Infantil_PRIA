@@ -37,17 +37,21 @@ public class FinPartida : MonoBehaviourPunCallbacks
     private void TextoGanador()
     {
         int monedasGanador = 0;
+        string nombreGanador = "";
+
         foreach (Player jugador in ControlJuego.instance.jugadores)
         {
             int monedas = (int)jugador.CustomProperties["monedas"];
+            nombreGanador = jugador.NickName;
 
             if(monedas >= monedasGanador)
             {
                 monedasGanador = monedas;
+                nombreGanador = jugador.NickName;
             }
         }
 
-        textoGanador.text = "Ganador: " + monedasGanador;
+        textoGanador.text = $"Ganador: {nombreGanador} con {monedasGanador} monedas recogidas";
 
     }
 }
