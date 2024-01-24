@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657826, g: 0.49641263, b: 0.57481676, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657868, g: 0.49641263, b: 0.57481706, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -557,7 +557,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 55e6c5327d184594693f7cc63751ab12, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cuentaAtras: 20
+  cuentaAtras: 60
   textoCuentaAtras: {fileID: 2040023415}
   textoMonedasRecogidas: {fileID: 1469393889}
 --- !u!4 &925054455
