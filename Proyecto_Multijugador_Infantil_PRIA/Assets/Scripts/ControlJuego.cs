@@ -27,7 +27,6 @@ public class ControlJuego : MonoBehaviourPunCallbacks
         instance = this;
         jugadores = PhotonNetwork.PlayerList;
         //photonView = GetComponent<PhotonView>();
-        //photonView = GetComponent<PhotonView>();
     }
 
     // Update is called once per frame
